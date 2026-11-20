@@ -14,6 +14,29 @@
 .choice.selected.good{background:#d5f1e3;border-color:#54bd91;color:#086c52}
 .choice.selected.bad{background:#ffe0e6;border-color:#ed7e94;color:#a92742}
 .choice.selected.warn{background:#ffebc9;border-color:#e9b260;color:#96580c}
+
+/* V9.2 – soft pastel, borderless inspection choices */
+.choicegrid{gap:8px}
+.choice{
+  border:0;
+  border-radius:15px;
+  background:#f1f7f7;
+  color:#68868b;
+  box-shadow:none;
+  padding:12px 4px;
+  min-height:48px;
+  font-weight:500;
+  transition:background-color .18s ease,color .18s ease,transform .15s ease;
+}
+.choice:active{transform:scale(.98)}
+.choice.selected,
+.choice.selected.good,
+.choice.selected.bad,
+.choice.selected.warn{border:0;box-shadow:none;font-weight:600}
+.choice.selected.good{background:#dcf5e9;color:#237d66}
+.choice.selected.bad{background:#ffe5e9;color:#b65167}
+.choice.selected.warn{background:#fff0d9;color:#a77b3c}
+.choice:focus-visible{outline:2px solid #8fcfc9;outline-offset:2px}
 </style></head><body><div class="app"><header class="header" id="header"></header><main class="main" id="content"></main><nav class="bottomnav" id="nav"></nav></div><div id="toast" class="toast hidden"></div><div class="report-print" id="report"></div>
 <script>
 'use strict';
@@ -145,7 +168,7 @@ function buildingCard(x){
   const pct=total?Math.round(done/total*100):0;
   return `<button class="listitem" onclick="ui.building='${x.id}';go('floors')"><span class="circle">🏢</span><span class="body"><span class="row between"><b>${esc(x.name)}</b><span class="pill teal">${total} ชั้น</span></span><span class="muted small">ตรวจครบวันนี้ ${done}/${total} ชั้น</span><div class="progress" style="margin-top:8px"><div style="width:${pct}%"></div></div></span><span class="chev">›</span></button>`;
 }
-function buildings(){if(MAPPING_STATE!=='ready')return mappingNotice();return `<h1>เลือกอาคาร</h1><p class="muted small" style="margin:5px 0 17px">ตรวจแยกอาคารและชั้น โดยมีมาตรฐานเดียวกันทุกประเภทพื้นที่</p><div style="text-align:right;margin-bottom:12px"><button class="btn secondary sm" onclick="loadCloud()">↻ อัปเดต Building Zone</button></div>${BUILDINGS.map(buildingCard).join('')}`}
+function buildings(){if(MAPPING_STATE!=='ready')return mappingNotice();return `<h1>เลือกอาคาร</h1><p class="muted small" style="margin:5px 0 17px">ตรวจแยกอาคารและชั้น โดยมีมาตรฐานเดียวกันทุกประเภทพื้นที่</p>${BUILDINGS.map(buildingCard).join('')}`}
 function floors(){
   if(MAPPING_STATE!=='ready')return mappingNotice();
   const x=b();
